@@ -1,52 +1,55 @@
-Write a C++ program that creates an output file, writes information to it, 
-closes the file and open it again as an input file and read the information 
-from the file
-*/
-
-#include <iostream>
-#include <fstream>
- 
+#include <bits/stdc++.h>
 using namespace std;
- 
+
+class file_handle
+{
+    fstream doc;
+    public:
+
+    void create_file()
+    {
+        doc.open("file_handle.txt", ios::out);
+
+        if (!doc)
+        {
+            cout << "Error !!! " << endl;
+        }
+        else
+        {
+            cout << "File Created Successfully " << endl;
+            doc.close();
+        }
+    }
+
+    void write_file()
+    {
+
+        doc.open("file_handle.txt", ios::out);
+        string data;
+        cout << "Enter data : ";
+        getline(cin, data);
+        doc << data;
+        cout << "Data Entered Successfully " << endl;
+        doc.close();
+    }
+
+    void read_file()
+    {
+
+        cout << "\nReading the file : ";
+        doc.open("file_handle.txt", ios::in);
+        string x;
+        while (doc >> x)
+        {
+            cout << x << " ";
+        }
+    }
+};
+
 int main()
 {
-   fstream file; //object of fstream class
-    
-   //opening file "sample.txt" in out(write) mode
-   file.open("sample.txt",ios::out);
-    
-   if(!file)
-   {
-       cout<<"Error in creating file!!!"<<endl;
-       return 0;
-   }
-    
-   cout<<"File created successfully."<<endl;
-   //write text into file
-   file<<"ABCD.";
-   //closing the file
-   file.close();
-    
-   //again open file in read mode
-   file.open("sample.txt",ios::in);
-    
-   if(!file)
-   {
-       cout<<"Error in opening file!!!"<<endl;
-       return 0;
-   }   
-    
-   //read untill end of file is not found.
-   char ch; //to read single character
-   cout<<"File content: ";
-    
-   while(!file.eof())
-   {
-       file>>ch; //read single character from file
-       cout<<ch;
-   }
-    
-   file.close(); //close file
-    
-   return 0;
+    file_handle doc;
+    doc.create_file();
+    doc.write_file();
+    doc.read_file();
 }
